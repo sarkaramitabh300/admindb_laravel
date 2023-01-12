@@ -13,6 +13,7 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
 
 <body class="auth-body-bg">
@@ -27,8 +28,8 @@
                             <a href="index.html" class="auth-logo">
                                 <img src="{{ 'assets/images/logo-dark.png' }}" height="30" class="logo-dark mx-auto"
                                     alt="">
-                                <img src="{{ 'assets/images/logo-light.png' }}" height="30"
-                                    class="logo-light mx-auto" alt="">
+                                <img src="{{ 'assets/images/logo-light.png' }}" height="30" class="logo-light mx-auto"
+                                    alt="">
                             </a>
                         </div>
                     </div>
@@ -37,12 +38,12 @@
 
                     <div class="p-3">
 
-                        <form method="POST" class="form-horizontal mt-3"action="{{ route('login') }}">
+                        <form method="POST" class="form-horizontal mt-3" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group mb-3 row">
                                 <div class="col-12">
-                                    <input class="form-control" id="username" type="text" name="username"
-                                        required="" placeholder="Username">
+                                    <input class="form-control" id="username" type="text" name="username" required=""
+                                        placeholder="Username">
                                 </div>
                             </div>
 
@@ -100,6 +101,30 @@
     <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        @if(Session::has('message'))
+         var type = "{{ Session::get('alert-type','info') }}"
+         switch(type){
+            case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
+        
+            case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break; 
+         }
+         @endif 
+    </script>
 
 </body>
 
@@ -110,7 +135,7 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        
+
         <!-- Email Address -->
         <div>
             <x-input-label for="username" :value="__('Username')" />
@@ -140,10 +165,10 @@
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                href="{{ route('password.request') }}">
+                {{ __('Forgot your password?') }}
+            </a>
             @endif
 
             <x-primary-button class="ml-3">

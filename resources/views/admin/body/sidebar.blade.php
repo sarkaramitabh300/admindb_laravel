@@ -1,3 +1,7 @@
+@php
+$id=Auth::user()->id;
+$adminData=App\Models\User::find($id);
+@endphp
 <div class="vertical-menu">
 
     <div data-simplebar class="h-100">
@@ -5,11 +9,12 @@
         <!-- User details -->
         <div class="user-profile text-center mt-3">
             <div class="">
-                <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt="" class="avatar-md rounded-circle">
+                <img src="{{(!empty($adminData->profile_image))? url('upload/admin_images/'.$adminData->profile_image): url('upload/no_image.jpg')}}"
+                    alt="" class="avatar-md rounded-circle">
             </div>
             <div class="mt-3">
-                <h4 class="font-size-16 mb-1">{{ Auth::user()->name }}</h4>
-                <h6 class="font-size-10 mb-1">Member :{{ Auth::user()->created_at }}</h6>
+                <h4 class="font-size-16 mb-1">{{ $adminData->name }}</h4>
+                <h6 class="font-size-10 mb-1">Email :{{ $adminData->email }}</h6>
 
                 <span class="text-muted"><i class="ri-record-circle-line align-middle font-size-14 text-success"></i>
                     Online</span>
